@@ -48,6 +48,9 @@ class App extends React.Component {
 
   onButtonSubmit = () => {
     console.log('click');
+    app.models
+       .predict
+        COLOR_MODEL
   }
 
   render() {

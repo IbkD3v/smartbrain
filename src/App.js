@@ -38,7 +38,7 @@ class App extends React.Component {
   }
 
   onButtonSubmit = () => {
-    console.log('click');
+    this.setState({imageUrl: input});
     app.models
        .predict(
         Clarifai.COLOR_MODEL,

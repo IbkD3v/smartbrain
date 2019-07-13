@@ -49,8 +49,17 @@ class App extends React.Component {
   onButtonSubmit = () => {
     console.log('click');
     app.models
-       .predict
-        COLOR_MODEL
+       .predict(
+        Clarifai.COLOR_MODEL,
+        "https://samples.clarifai.com/face-det.jpg")
+        .then(
+          function(response){
+            console.log(response);
+          },
+          function(err){
+
+          }
+        );
   }
 
   render() {

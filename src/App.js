@@ -5,6 +5,7 @@ import Navigation from './components/Navigation/Navigation';
 import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
+import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import './App.css';
 
 
@@ -36,6 +37,7 @@ class App extends React.Component {
     console.log(event.target.value);
     app.models.predict("a403429f2ddf4b49b307e318f00e528b", "https://samples.clarifai.com/face-det.jpg").then(
     function(response) {
+      console.log(response);
       // do something with response
     },
     function(err) {
@@ -60,9 +62,7 @@ class App extends React.Component {
         <Logo/>
         <Rank / >
         <ImageLinkForm onInputChange = {this.onInputChange} onButtonSubmit={this.onButtonSubmit}/> 
-        {
-        /*
-            <FaceRecognition />*/} 
+            <FaceRecognition />
       </div>
   );
 }

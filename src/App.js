@@ -30,6 +30,7 @@ class App extends React.Component {
     super();
     this.state = {
       input: '',
+      imageUrl: ''
     }
   }
 
@@ -65,7 +66,7 @@ class App extends React.Component {
         <Logo/>
         <Rank / >
         <ImageLinkForm onInputChange = {this.onInputChange} onButtonSubmit={this.onButtonSubmit}/> 
-            <FaceRecognition />
+            <FaceRecognition  imageUrl={this.state.imageUrl}/>
       </div>
   );
 }

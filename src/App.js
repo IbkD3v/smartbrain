@@ -30,8 +30,14 @@ class App extends React.Component {
     super();
     this.state = {
       input: '',
-      imageUrl: ''
+      imageUrl: '',
+      box: {},
     }
+  }
+
+  calculateFaceLocation = (data) => {
+   const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box);
+   const image = document.getElementById('inputimage');
   }
 
   onInputChange = (event) => {
@@ -44,14 +50,8 @@ class App extends React.Component {
        .predict(
         Clarifai.FACE_DETECT_MODEL,
         this.state.input)
-        .then(
-          function(response){
-            console.log(response.outputs[0].data.regions[0].region_info.bounding_box);
-          },
-          function(err){
-
-          }
-        );
+        .then(response => this.calculateFaceLocation(response))
+         .catch(err => console.log(err));
   }
 
   render() {

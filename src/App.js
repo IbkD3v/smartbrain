@@ -1,4 +1,5 @@
 import React from "react";
+import React from "react";
 import Particles from "react-particles-js";
 import Clarifai from "clarifai";
 import Navigation from "./components/Navigation/Navigation";

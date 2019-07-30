@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class SignIn extends Component {
+class SignIn extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
@@ -17,18 +17,17 @@ class SignIn extends Component {
 	}
 
 	onSubmitSignIn = () => {
-		fetch('https://morning-coast-42601.herokuapp.com/signin',{
+		fetch('http://localhost:3000/signin', {
 			method: 'post',
-			headers: {'Content-Type':'application/json'},
+			headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify({
 				email: this.state.signInEmail,
 				password: this.state.signInPassword
 			})
 		})
 		.then(response => response.json())
-		.then(user => {
-			if(user.id){
-				this.props.loadUser(user);
+		.then(data => {
+			if (data === 'success'){
 				this.props.onRouteChange('home');
 			}
 		})

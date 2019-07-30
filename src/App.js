@@ -1,5 +1,4 @@
 import React from "react";
-import React from "react";
 import Particles from "react-particles-js";
 import Clarifai from "clarifai";
 import Navigation from "./components/Navigation/Navigation";
@@ -35,8 +34,25 @@ class App extends React.Component {
 			imageUrl: "",
 			box: {},
 			route: 'signin',
-			isSignedIn: false
+			isSignedIn: false,
+			user:{
+				id: '',
+				name: '',
+				email: '',
+				entries: '',
+				joined: ''
+			}
 		};
+	}
+
+	loadUser = (data) => {
+		this.setState({user: {
+		  id: data.id,
+		  name: data.name,
+		  email: data.email,
+		  entries: data.entries,
+		  joined: data.joined
+		}})
 	}
 
 	calculateFaceLocation = data => {
@@ -65,9 +81,24 @@ class App extends React.Component {
 		this.setState({ imageUrl: this.state.input });
 		app.models
 			.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
-			.then(response =>
+			.then(response =>{
+				if(response){
+					fetch('http://localhost:3000/image',{
+					method: 'put',
+			headers: {'Content-Type': 'application/json'},
+			body: JSON.stringify({
+				id: this.state.user.id
+			})
+				})
+				.then(response => response.json())
+				.then(count => {
+					 this.setState(Object.assign(this.state.user, {entries: count}))
+				})
+				.catch(console.log)
+					}
+		
 				this.displayFaceBox(this.calculateFaceLocation(response))
-			)
+			})
 			.catch(err => console.log(err));
 	};
 
@@ -100,7 +131,7 @@ class App extends React.Component {
 					</div>
 				 :( route === "signin" 
 					?<SignIn onRouteChange={this.onRouteChange} />
-				:	<Register onRouteChange={this.onRouteChange} />
+				:	<Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
         )
         }
 			</div>
